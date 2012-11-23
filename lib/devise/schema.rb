@@ -36,8 +36,8 @@ module Devise
     # Creates confirmation_token, confirmed_at and confirmation_sent_at.
     def confirmable
       apply_devise_schema :confirmation_token,   String
-      apply_devise_schema :confirmed_at,         DateTime
-      apply_devise_schema :confirmation_sent_at, DateTime
+      apply_devise_schema :confirmed_at,         ZonedTime
+      apply_devise_schema :confirmation_sent_at, ZonedTime
     end
 
     # Creates reset_password_token and reset_password_sent_at.
@@ -47,7 +47,7 @@ module Devise
     def recoverable(options={})
       use_within = options.fetch(:reset_within, Devise.reset_password_within.present?)
       apply_devise_schema :reset_password_token, String
-      apply_devise_schema :reset_password_sent_at, DateTime if use_within
+      apply_devise_schema :reset_password_sent_at, ZonedTime if use_within
     end
 
     # Creates remember_token and remember_created_at.
@@ -57,15 +57,15 @@ module Devise
     def rememberable(options={})
       use_salt = options.fetch(:use_salt, Devise.use_salt_as_remember_token)
       apply_devise_schema :remember_token,      String unless use_salt
-      apply_devise_schema :remember_created_at, DateTime
+      apply_devise_schema :remember_created_at, ZonedTime
     end
 
     # Creates sign_in_count, current_sign_in_at, last_sign_in_at,
     # current_sign_in_ip, last_sign_in_ip.
     def trackable
       apply_devise_schema :sign_in_count,      Integer, :default => 0
-      apply_devise_schema :current_sign_in_at, DateTime
-      apply_devise_schema :last_sign_in_at,    DateTime
+      apply_devise_schema :current_sign_in_at, ZonedTime
+      apply_devise_schema :last_sign_in_at,    ZonedTime
       apply_devise_schema :current_sign_in_ip, String
       apply_devise_schema :last_sign_in_ip,    String
     end
@@ -93,7 +93,7 @@ module Devise
         apply_devise_schema :unlock_token, String
       end
 
-      apply_devise_schema :locked_at, DateTime
+      apply_devise_schema :locked_at, ZonedTime
     end
 
     # Overwrite with specific modification to create your own schema.
